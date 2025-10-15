@@ -1,4 +1,4 @@
-name: Remote SSH Command
+name: Remote SSH Deploy
 
 on:
   push:
@@ -7,14 +7,14 @@ on:
 
 jobs:
   deploy:
-    name: Push to EC2
+    name: Deploy to EC2
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Execute remote SSH command
+      - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: 3.110.29.220
@@ -25,6 +25,6 @@ jobs:
             cd devops/server
             git pull
             npm install
-
-            pm2 start app.js
-            
+            npm run build
+            pm2 reload nestjs-app || pm2 start dist/main.js --name "nestjs-app"
+            pm2 save
