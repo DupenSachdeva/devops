@@ -26,5 +26,5 @@ jobs:
             git pull
             npm install
             npm run build
-            pm2 reload nestjs-app || pm2 start dist/main.js --name "nestjs-app"
+            pm2 reload nestjs-app || pm2 start dist/main.js --name "devops"
             pm2 save
